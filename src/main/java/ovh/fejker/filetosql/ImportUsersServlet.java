@@ -29,7 +29,7 @@ public class ImportUsersServlet extends HttpServlet {
     int result = 0;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");                                                             //displaying summary of import to user
         PrintWriter writer = response.getWriter();
         writer.println("<html><body><h1>Import successful " + result + " records affected</h1></body></html>");
     }
@@ -38,19 +38,22 @@ public class ImportUsersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/java","java", "java");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/java","java", "java");     //setting up mysql connection
+
             Part filePart = request.getPart("file");
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();      //xml upload
             InputStream fileContent = filePart.getInputStream();
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);                   //xml parse
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(fileContent);
             doc.getDocumentElement().normalize();
 
             NodeList list = doc.getElementsByTagName("user");
 
+            connection.prepareStatement("DELETE FROM users").executeUpdate();    //assuming we want to overwrite existing records
+            //TODO reset id counter
 
             for(int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);
