@@ -52,8 +52,7 @@ public class ImportUsersServlet extends HttpServlet {
 
             NodeList list = doc.getElementsByTagName("user");
 
-            connection.prepareStatement("DELETE FROM users").executeUpdate();    //assuming we want to overwrite existing records
-            //TODO reset id counter
+            connection.prepareStatement("TRUNCATE TABLE users;").executeUpdate();    //assuming we want to overwrite existing records
 
             for(int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);
@@ -67,7 +66,7 @@ public class ImportUsersServlet extends HttpServlet {
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, surname);
                     preparedStatement.setString(3, login);
-                    result += preparedStatement.executeUpdate();
+                    result += (preparedStatement.executeUpdate()) * 3;      //get affected rows
                 }
             }
 

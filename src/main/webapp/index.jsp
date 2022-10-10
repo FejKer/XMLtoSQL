@@ -8,7 +8,7 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="getusers.jsp">Get Users</a>
+<a href="GetUsersServlet">Get Users</a>
 <a href="importusers.jsp">Import Users</a>
 </body>
 </html>
