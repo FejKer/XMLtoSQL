@@ -1,6 +1,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="javax.xml.bind.DatatypeConverter" %>
 <%@ page import="java.security.MessageDigest" %>
+<%@ page import="ovh.fejker.filetosql.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -13,8 +14,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<form action="">
-    <input type="search" id="input" onkeyup="search()" placeholder="Wyszukaj...">
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="index.jsp">Home Page</a>
+</nav>
+<form action="GetUsersServlet" method="get" class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" name="searchInput">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>
 <table id="userTable" class="table table-striped table-hover">
     <thead>
@@ -27,20 +32,19 @@
     </thead>
     <tbody>
 <%
-    HashMap<Long, ArrayList<String>> data = (HashMap<Long, ArrayList<String>>) request.getAttribute("users");
-    ArrayList<String> users;
+    ArrayList<User> users = new ArrayList<User>((ArrayList<User>) request.getAttribute("users"));
 
-    for(int i = 1; i <= data.size(); i++) {
-        users = new ArrayList<>(data.get((long) i));
-        String name = users.get(0);
+    for(User user : users) {
+        String name = user.getName();
 
         MessageDigest md = MessageDigest.getInstance("MD5");        //md5 hashing
         md.update(name.getBytes());
         byte[] digest = md.digest();
         String nameHashed = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
-        String surname = users.get(1) + "_" + nameHashed;
-        String login = users.get(2);
+        String surname = user.getSurname() + "_" + nameHashed;
+        String login = user.getLogin();
+        long i = user.getId();
 
 %>
     <tr>
@@ -52,6 +56,7 @@
 <%}%>
     </tbody>
 </table>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="scripts.js"></script>
 </body>

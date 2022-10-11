@@ -6,27 +6,32 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @MultipartConfig
 @WebServlet(name = "ImportUsersServlet", value = "/ImportUsersServlet")
 public class ImportUsersServlet extends HttpServlet {
 
     int result = 0;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");                                                             //displaying summary of import to user
@@ -58,14 +63,15 @@ public class ImportUsersServlet extends HttpServlet {
                 Node node = list.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
-                    String name = element.getElementsByTagName("name").item(0).getTextContent();
+                    String name = element.getElementsByTagName("name").item(0).getTextContent();        //getting data from xml
                     String surname = element.getElementsByTagName("surname").item(0).getTextContent();
                     String login = element.getElementsByTagName("login").item(0).getTextContent();
-                    String query = "INSERT INTO users (name, surname, login) VALUES(?,?,?)";
+                    String query = "INSERT INTO users (name, surname, login) VALUES(?,?,?)";                //insert into database
                     PreparedStatement preparedStatement = connection.prepareStatement(query);
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, surname);
                     preparedStatement.setString(3, login);
+
                     result += (preparedStatement.executeUpdate()) * 3;      //get affected rows
                 }
             }
