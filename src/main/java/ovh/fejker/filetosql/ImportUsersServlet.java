@@ -42,9 +42,6 @@ public class ImportUsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/java","java", "java");     //setting up mysql connection
-
             Part filePart = request.getPart("file");
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();      //xml upload
             InputStream fileContent = filePart.getInputStream();
@@ -57,7 +54,7 @@ public class ImportUsersServlet extends HttpServlet {
 
             NodeList list = doc.getElementsByTagName("user");
 
-            connection.prepareStatement("TRUNCATE TABLE users;").executeUpdate();    //assuming we want to overwrite existing records
+            DatabaseHandler.getConnection().prepareStatement("TRUNCATE TABLE users;").executeUpdate();    //assuming we want to overwrite existing records
 
             for(int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);
@@ -67,7 +64,7 @@ public class ImportUsersServlet extends HttpServlet {
                     String surname = element.getElementsByTagName("surname").item(0).getTextContent();
                     String login = element.getElementsByTagName("login").item(0).getTextContent();
                     String query = "INSERT INTO users (name, surname, login) VALUES(?,?,?)";                //insert into database
-                    PreparedStatement preparedStatement = connection.prepareStatement(query);
+                    PreparedStatement preparedStatement = DatabaseHandler.getConnection().prepareStatement(query);
                     preparedStatement.setString(1, name);
                     preparedStatement.setString(2, surname);
                     preparedStatement.setString(3, login);
@@ -75,8 +72,6 @@ public class ImportUsersServlet extends HttpServlet {
                     result += (preparedStatement.executeUpdate()) * 3;      //get affected rows
                 }
             }
-
-            connection.close();
 
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
