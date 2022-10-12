@@ -28,4 +28,9 @@ public class User {
     public String getLogin() {
         return login;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + "}";
+    }
 }

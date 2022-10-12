@@ -17,17 +17,37 @@
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="index.jsp">Home Page</a>
 </nav>
-<form action="GetUsersServlet" method="get" class="form-inline">
+<form method="post" class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" name="searchInput">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>
 <table id="userTable" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th onclick="sortTable(0)" scope="col">#</th>
-            <th onclick="sortTable(1)" scope="col">Name</th>
-            <th onclick="sortTable(2)" scope="col">Surname</th>
-            <th onclick="sortTable(3)" scope="col">Login</th>
+            <th scope="col">
+                <form action="SortedUsersServlet" method="post">id
+                    <input type="hidden" name="column" value="id">
+                    <button class="sort" type="submit"></button>
+                </form>
+            </th>
+            <th scope="col">
+                <form action="SortedUsersServlet" method="post">login
+                    <input type="hidden" name="column" value="login">
+                    <button class="sort" type="submit"></button>
+                </form>
+            </th>
+            <th scope="col">
+                <form action="SortedUsersServlet" method="post">name
+                    <input type="hidden" name="column" value="name">
+                    <button class="sort" type="submit"></button>
+                </form>
+            </th>
+            <th scope="col">
+                <form action="SortedUsersServlet" method="post">surname
+                    <input type="hidden" name="column" value="surname">
+                    <button class="sort" type="submit"></button>
+                </form>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -56,7 +76,6 @@
 <%}%>
     </tbody>
 </table>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="scripts.js"></script>
 </body>
