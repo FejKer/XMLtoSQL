@@ -55,8 +55,9 @@ public class ImportUsersServlet extends HttpServlet {
 
             NodeList list = doc.getElementsByTagName("user");
 
-            DatabaseHandler.getConnection().prepareStatement("TRUNCATE TABLE users;").executeUpdate();    //assuming we want to overwrite existing records
             Connection connection = DatabaseHandler.getConnection();
+
+            connection.prepareStatement("TRUNCATE TABLE users").executeUpdate();    //assuming we want to overwrite existing records
             for(int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
@@ -89,7 +90,7 @@ public class ImportUsersServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } finally {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("importusers.jsp#modal");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("importusers.jsp");
             requestDispatcher.forward(request, response);
         }
 
