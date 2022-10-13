@@ -40,12 +40,6 @@
             </th>
             <th scope="col">
                 <form action="SortedUsersServlet" method="post">
-                    <input type="hidden" name="column" value="login">
-                    <button class="sort" type="submit">login</button>
-                </form>
-            </th>
-            <th scope="col">
-                <form action="SortedUsersServlet" method="post">
                     <input type="hidden" name="column" value="name">
                     <button class="sort" type="submit">name</button>
                 </form>
@@ -54,6 +48,12 @@
                 <form action="SortedUsersServlet" method="post">
                     <input type="hidden" name="column" value="surname">
                     <button class="sort" type="submit">surname</button>
+                </form>
+            </th>
+            <th scope="col">
+                <form action="SortedUsersServlet" method="post">
+                    <input type="hidden" name="column" value="login">
+                    <button class="sort" type="submit">login</button>
                 </form>
             </th>
         </tr>

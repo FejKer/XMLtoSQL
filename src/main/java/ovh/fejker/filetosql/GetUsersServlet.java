@@ -82,11 +82,16 @@ public class GetUsersServlet extends HttpServlet {
     }
 
     public static int getNumberOfPages(){
+        int temp;
         if(GetUsers.getRecords() % 50 > 0){
-            return GetUsers.getRecords() / 50 + 1;
+            temp = GetUsers.getRecords() / 50 + 1;
         } else {
-            return GetUsers.getRecords() / 50;
+            temp = GetUsers.getRecords() / 50;
         }
+        if(temp == 0) {
+            temp = 1;
+        }
+        return temp;
     }
     public static int getPage(){
         return page;

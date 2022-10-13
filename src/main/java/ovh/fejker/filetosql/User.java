@@ -6,7 +6,7 @@ public class User {
     private String surname;
     private String login;
 
-    public User(long id, String name, String surname, String login) {
+    public User(long id, String login, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
