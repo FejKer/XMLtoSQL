@@ -5,19 +5,38 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "SortedUsersServlet", value = "/SortedUsersServlet")
 public class SortedUsersServlet extends HttpServlet {
     private String column = "";
     private String search = "";
+    private ArrayList<User> users;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if(!search.equals("") && search != null){
-                request.setAttribute("users", GetUsers.getSortedUsers(column, search));
-            } else {
-                request.setAttribute("users", GetUsers.getSortedUsers(column));
+            if(request.getParameter("page") != null){
+                GetUsersServlet.setPage(Integer.parseInt(request.getParameter("page")));
             }
+
+            if(!search.equals("") && search != null){
+                users = GetUsers.getSortedUsers(column, search);
+                if(GetUsersServlet.getPage() > GetUsersServlet.getNumberOfPages()){
+                    GetUsersServlet.setPage(1);
+                }
+            }else if(GetUsersServlet.getSearch() != null){
+                search = GetUsersServlet.getSearch();
+                users = GetUsers.getSortedUsers(column, search);
+                GetUsersServlet.setSearch();
+            } else {
+                users = GetUsers.getSortedUsers(column);
+            }
+
+            request.setAttribute("users", users);
+            request.setAttribute("numberOfPages", GetUsersServlet.getNumberOfPages());
+            request.setAttribute("currentPage", GetUsersServlet.getPage());
+            request.setAttribute("numberOfUsers", GetUsers.getRecords());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

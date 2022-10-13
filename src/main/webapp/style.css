@@ -1,27 +1,86 @@
-th {
-    cursor: pointer;
-}
 .navbar-brand {
     cursor: pointer;
     margin-left: 10%;
 }
 
-.fa{
-    box-sizing: border-box;
-    padding: 10px;
-    width: 42.5px;
-    height: 42.5px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 50%;
-    color: black;
-    text-align: center;
-    font-size: 1.2em;
-    transition: all 1s;
+#searchBar {
+    width: 20%;
+    margin-left: 10%;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .table{
     width: 80%;
     margin: 0 auto;
+}
+.sort{
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+}
+nav {
+    text-align: center;
+}
+nav p {
+    margin-bottom: 0;
+}
+nav ul {
+    display: inline-grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .3em;
+    list-style: none;
+    padding: 0;
+    margin-top: .3em;
+}
+nav li {
+    align-self: center;
+}
+nav li:not([aria-current="page"]) {
+    font-size: 1.7em;
+    width: 1.25em;
+    height: 1.25em;
+    line-height: 1.1em;
+    border: 1px solid #ccc;
+}
+nav [aria-current="page"] {
+    grid-column: span 3;
+    font-weight: 700;
+}
+nav li:not([aria-hidden="true"]):not([aria-current="page"]):hover {
+    background-color: #245884;
+    border-color: #245884;
+    cursor: pointer;
+}
+nav li:not([aria-hidden="true"]):hover a {
+    color: #fff;
+}
+nav a {
+    display: block;
+}
+nav a:focus {
+    outline: none;
+}
+nav li:focus-within {
+    outline: 2px solid #245884;
+    outline-offset: .1em;
+}
+@media (max-width: 400px) {
+    nav ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    nav [aria-current="page"] {
+        grid-column: span 2;
+    }
+}
+.jumbotron{
+    justify-content: center;
+}
+#main{
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 10px;
+    width: 50%;
 }

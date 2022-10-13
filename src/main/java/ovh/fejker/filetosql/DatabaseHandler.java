@@ -1,7 +1,6 @@
 package ovh.fejker.filetosql;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DatabaseHandler {
 
