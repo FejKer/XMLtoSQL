@@ -1,7 +1,7 @@
-<%@ page import="java.util.*" %>
 <%@ page import="javax.xml.bind.DatatypeConverter" %>
 <%@ page import="java.security.MessageDigest" %>
 <%@ page import="ovh.fejker.filetosql.User" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -87,8 +87,6 @@
 
 <nav aria-label="Pagination">
     <p><%=request.getAttribute("numberOfUsers")%> users</p>
-    <p><%=request.getAttribute("numberOfPages")%> number of pages</p>
-    <p><%=request.getAttribute("currentPage")%> this page</p>
     <ul>
         <c:choose>
             <c:when test="${currentPage == 1}">

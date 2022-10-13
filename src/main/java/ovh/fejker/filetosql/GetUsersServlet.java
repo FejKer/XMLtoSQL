@@ -1,23 +1,43 @@
 package ovh.fejker.filetosql;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 @WebServlet(name = "GetUsersServlet", value = "/GetUsersServlet")
 public class GetUsersServlet extends HttpServlet {
     private static int page;
     private static String search = "";
     private static ArrayList<User> users;
+    private static String url = "";
+    private static String user = "";
+    private static String password = "";
+    private static String driver = "";
 
     @Override
     public void init() throws ServletException {
+        Properties props = new Properties();
+
+        ServletContext ctx = this.getServletContext();
+        InputStream is = ctx.getResourceAsStream("/WEB-INF/db.properties");
+        InputStreamReader isr = new InputStreamReader(is);
+        try {
+            props.load(isr);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        driver = props.getProperty("jdbc.driver");
+        url = props.getProperty("jdbc.url");
+        user = props.getProperty("jdbc.username");
+        password = props.getProperty("jdbc.password");
         page = 1;
     }
     @Override
@@ -79,5 +99,20 @@ public class GetUsersServlet extends HttpServlet {
     }
     public static void setSearch(){
         search = "";
+    }
+    public static String getUrl() {
+        return url;
+    }
+
+    public static String getUser() {
+        return user;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static String getDriver() {
+        return driver;
     }
 }

@@ -6,11 +6,11 @@ public class DatabaseHandler {
 
     public static Connection getConnection() throws ClassNotFoundException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(GetUsersServlet.getDriver());
             return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/java",
-                    "java",
-                    "java"
+                    GetUsersServlet.getUrl(),
+                    GetUsersServlet.getUser(),
+                    GetUsersServlet.getPassword()
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
