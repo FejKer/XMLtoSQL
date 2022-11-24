@@ -29,21 +29,21 @@ This is where you start. Choose either one of options. Links will take you to co
 On this site you can upload file of your own, that contains user data, formatted like so:
 ```
 <users>
-	<user>
+  <user>
 	<name>user1</name>
 	<surname>surname1</surname>
 	<login>login1</login>
-	</user>
+  </user>
   <user>
 	<name>user2</name>
 	<surname>surname2</surname>
 	<login>login2</login>
-	</user>
+  </user>
   <user>
 	<name>usern</name>
 	<surname>surnamen</surname>
 	<login>loginn</login>
-	</user>
+  </user>
 </users>
 ```
 For now the application parses only basic data, however it is a subject to change.
