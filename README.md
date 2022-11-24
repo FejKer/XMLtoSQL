@@ -30,19 +30,19 @@ On this site you can upload file of your own, that contains user data, formatted
 ```
 <users>
 	<user>
-		<name>user1</name>
-		<surname>surname1</surname>
-		<login>login1</login>
+	<name>user1</name>
+	<surname>surname1</surname>
+	<login>login1</login>
 	</user>
   <user>
-		<name>user2</name>
-		<surname>surname2</surname>
-		<login>login2</login>
+	<name>user2</name>
+	<surname>surname2</surname>
+	<login>login2</login>
 	</user>
   <user>
-		<name>usern</name>
-		<surname>surnamen</surname>
-		<login>loginn</login>
+	<name>usern</name>
+	<surname>surnamen</surname>
+	<login>loginn</login>
 	</user>
 </users>
 ```
@@ -51,7 +51,8 @@ For now the application parses only basic data, however it is a subject to chang
 ## Users' data 👨
 ![2](https://user-images.githubusercontent.com/29582159/203868678-184f3093-762a-4235-a30e-adda0e14e8d6.PNG)
 
-Here we can display, search or sort users' data that our database holds. The MD5 hashcode appended to surname is just 
-```surname + _ + (MD5)name````
+Here we can display, search or sort users' data that our database holds. 
+
+The MD5 hashcode appended to surname is just `surname + _ + (MD5)name`.
 
 Used pagination to avoid downloading all of database's content everytime.
